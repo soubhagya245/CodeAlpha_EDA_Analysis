@@ -1,0 +1,116 @@
+import pandas as pd
+df = pd.read_csv("superstore.csv")
+print(df.head())
+print("\nDataset Shape:")
+print(df.shape)
+print("\nColumn Names:")
+print(df.columns)
+print("\nDataset Information:")
+df.info()
+print("\nStatistical Summary:")
+print(df.describe())
+print("\nMissing Values:")
+print(df.isnull().sum())
+print("\nDuplicate Records:")
+print(df.duplicated().sum())
+df = df.drop_duplicates()
+print("\nShape after removing duplicates:")
+print(df.shape)
+print("\nTotal Sales:")
+print(df['Sales'].sum())
+print("\nAverage Sales:")
+print(df['Sales'].mean())
+print("\nMedian Sales:")
+print(df['Sales'].median())
+print("\nMaximum Sales:")
+print(df['Sales'].max())
+print("\nMinimum Sales:")
+print(df['Sales'].min())
+print("\nTotal Profit:")
+print(df['Profit'].sum())
+print("\nAverage Profit:")
+print(df['Profit'].mean())
+category_sales = df.groupby('Category')['Sales'].sum()
+print("\nCategory-wise Sales:")
+print(category_sales)
+category_profit = df.groupby('Category')['Profit'].sum()
+print("\nCategory-wise Profit:")
+print(category_profit)
+region_sales = df.groupby('Region')['Sales'].sum()
+print("\nRegion-wise Sales:")
+print(region_sales)
+print("\nHighest Sales Category:")
+print(category_sales.idxmax())
+print("\nHighest Profit Category:")
+print(category_profit.idxmax())
+print("\nHighest Sales Region:")
+print(region_sales.idxmax())
+subcategory_sales = df.groupby('Sub-Category')['Sales'].sum()
+print("\nSub-category-wise Sales:")
+print(subcategory_sales.sort_values(ascending=False))
+subcategory_profit = df.groupby('Sub-Category')['Profit'].sum()
+print("\nSub-category-wise Profit:")
+print(subcategory_profit.sort_values(ascending=False))
+print("\nHighest Sales Sub-category:")
+print(subcategory_sales.idxmax())
+print("\nHighest Profit Sub-category:")
+print(subcategory_profit.idxmax())
+
+import matplotlib.pyplot as plt
+
+category_sales = df.groupby('Category')['Sales'].sum()
+
+plt.figure(figsize=(8, 5))
+category_sales.plot(kind='bar')
+
+plt.title('Category-wise Sales Analysis')
+plt.xlabel('Category')
+plt.ylabel('Total Sales')
+plt.xticks(rotation=0)
+
+plt.tight_layout()
+plt.savefig("category_sales.png")
+plt.show()
+
+
+region_sales = df.groupby('Region')['Sales'].sum()
+
+plt.figure(figsize=(8, 5))
+region_sales.plot(kind='bar')
+
+plt.title('Region-wise Sales Analysis')
+plt.xlabel('Region')
+plt.ylabel('Total Sales')
+plt.xticks(rotation=0)
+
+plt.tight_layout()
+plt.savefig("region_sales.png")
+plt.show()
+
+
+category_profit = df.groupby('Category')['Profit'].sum()
+
+plt.figure(figsize=(8, 5))
+category_profit.plot(kind='bar')
+
+plt.title('Category-wise Profit Analysis')
+plt.xlabel('Category')
+plt.ylabel('Total Profit')
+plt.xticks(rotation=0)
+
+plt.tight_layout()
+plt.savefig("category_profit.png")
+plt.show()
+
+
+plt.figure(figsize=(8, 5))
+
+plt.hist(df['Sales'], bins=30, edgecolor='black')
+
+plt.title('Distribution of Sales')
+plt.xlabel('Sales')
+plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.savefig("sales_distribution.png")
+plt.show()
